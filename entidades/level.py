@@ -1,4 +1,6 @@
+import pymysql
 from persistence.db import get_connection
+from utils.crypto_utils import cifrar_palabra, descifrar_palabra
 from typing import List, Dict, Any
 
 
@@ -44,12 +46,15 @@ class Level:
             connection = get_connection()
             cursor = connection.cursor()
 
+            # Cifrar la palabra secreta antes de guardarla (AES via Fernet - Luis)
+            secret_word_encrypted = cifrar_palabra(secret_word)
+
             sql = """
-                INSERT INTO niveles (image, hint, secret_word, level_number)
+                INSERT INTO levels (image, hint, secret_word, level_number)
                 VALUES (%s, %s, %s, %s)
             """
 
-            cursor.execute(sql, (image, hint, secret_word, level_number))
+            cursor.execute(sql, (image, hint, secret_word_encrypted, level_number))
             connection.commit()
 
             cursor.close()
@@ -59,6 +64,42 @@ class Level:
 
         except Exception as ex:
             print(f"Error saving level: {ex}")
+            return False
+
+    @staticmethod
+    def validate_answer(level_id: int, user_answer: str) -> bool:
+        """
+        Valida si la respuesta del jugador coincide con la palabra secreta del nivel.
+        Descifra la palabra almacenada antes de comparar (AES via Fernet - Luis).
+
+        Args:
+            level_id (int): ID del nivel en la base de datos.
+            user_answer (str): Respuesta ingresada por el jugador.
+
+        Returns:
+            bool: True si la respuesta es correcta, False en caso contrario.
+        """
+        try:
+            connection = get_connection()
+            cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+            sql = "SELECT secret_word FROM levels WHERE id = %s"
+            cursor.execute(sql, (level_id,))
+            level = cursor.fetchone()
+
+            cursor.close()
+            connection.close()
+
+            if not level:
+                return False
+
+            # Descifrar la palabra para comparar (AES via Fernet - Luis)
+            secret_word = descifrar_palabra(level["secret_word"])
+
+            return user_answer.lower().strip() == secret_word.lower().strip()
+
+        except Exception as ex:
+            print(f"Error validating answer: {ex}")
             return False
 
     @staticmethod
@@ -76,7 +117,7 @@ class Level:
             connection = get_connection()
             cursor = connection.cursor()
 
-            sql = "SELECT * FROM niveles ORDER BY level_number ASC"
+            sql = "SELECT * FROM levels ORDER BY level_number ASC"
             cursor.execute(sql)
 
             niveles = cursor.fetchall()
