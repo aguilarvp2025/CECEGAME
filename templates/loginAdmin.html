@@ -17,12 +17,24 @@
       <h1 class="title">ACCESS</h1>
       <p class="subtitle">Sistema de administración autorizado</p>
 
-      <form>
-        <label>Identificación del Sheriff</label>
-        <input type="text" placeholder="ID oficial">
+      <!-- Mensajes Flash de advertencia/error -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div style="color: #ffeb3b; margin-bottom: 15px; font-size: 14px; text-align: center;">
+            {% for category, message in messages %}
+              {{ message }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <!-- Formulario conectado a la ruta de inicio de sesión -->
+      <form action="{{ url_for('login_Gamer') }}" method="POST">
+        <label>Identificación del Sheriff (Correo)</label>
+        <input type="text" name="alias" placeholder="admin@juego.com" required>
 
         <label>Código de acceso</label>
-        <input type="password" placeholder="••••••••">
+        <input type="password" name="password" placeholder="••••••••" required>
 
         <button type="submit">Ingresar al despacho</button>
       </form>

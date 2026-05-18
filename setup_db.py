@@ -1,29 +1,19 @@
 import os
-import pymysql
 from werkzeug.security import generate_password_hash
-from dotenv import load_dotenv
-
-# Cargar variables de entorno
-load_dotenv()
+from persistence.db import get_connection
 
 # Intentar importar la función de cifrado de Luis Campa
 try:
     from utils.crypto_utils import cifrar_palabra
 except ImportError:
-    # Fallback si no está cargada
     def cifrar_palabra(palabra: str) -> str:
         return palabra
 
 def setup_database():
-    print("Conectándose a la base de datos local...")
+    print("Conectándose a la base de datos a través de persistence.db...")
     try:
-        connection = pymysql.connect(
-            host='127.0.0.1',
-            port=3307,
-            user='root',
-            password='admin',
-            database='juego_db'
-        )   
+        # Reutilizamos la conexión única del proyecto
+        connection = get_connection()
         cursor = connection.cursor()
         print("¡Conexión establecida con éxito!")
         
@@ -61,7 +51,7 @@ def setup_database():
                 ("Administrador Sheriff", "admin@juego.com", hash_pass, "ADMINISTRADOR")
             )
             
-        # 4. Insertar niveles iniciales de prueba cifrados si está vacía
+        # 4. Insertar niveles iniciales de prueba cifrados si la tabla está vacía
         cursor.execute("SELECT id FROM levels LIMIT 1")
         if not cursor.fetchone():
             print("Insertando niveles iniciales con palabras cifradas...")
@@ -81,10 +71,11 @@ def setup_database():
         connection.commit()
         cursor.close()
         connection.close()
-        print("¡Base de datos configurada y poblada con éxito total! 🚀")
+        print("\n¡Base de datos local configurada y poblada con éxito total! 🚀🤠")
         
     except Exception as ex:
-        print(f"Error al configurar la base de datos: {ex}")
+        print(f"\nError al configurar la base de datos: {ex}")
+        print("Asegúrate de que tus credenciales en persistence/db.py (o archivo .env) sean correctas y que tu servidor local de MySQL esté encendido.")
 
 if __name__ == "__main__":
     setup_database()
