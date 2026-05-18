@@ -18,12 +18,12 @@ def setup_database():
     print("Conectándose a la base de datos local...")
     try:
         connection = pymysql.connect(
-            host=os.getenv('DB_HOST', 'localhost'),
-            user=os.getenv('DB_USER', 'root'),
-            password=os.getenv('DB_PASSWORD', ''),
-            database=os.getenv('DB_NAME', 'juego_db'),
-            cursorclass=pymysql.cursors.DictCursor
-        )
+            host='127.0.0.1',
+            port=3307,
+            user='root',
+            password='admin',
+            database='juego_db'
+        )   
         cursor = connection.cursor()
         print("¡Conexión establecida con éxito!")
         

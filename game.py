@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, flash
 from typing import List, Dict, Any
+from flask_login import login_required
+from utils.decorators import admin_required
 from entidades.level import Level
 from utils.crypto_utils import cifrar_palabra, descifrar_palabra
 
@@ -16,12 +18,14 @@ def descifrar_palabra_real(palabra_cifrada: str) -> str:
 admin_bp = Blueprint('admin_bp', __name__, url_prefix='/admin')
 
 @admin_bp.route('/', methods=['GET'])
+@admin_required
 def panel_admin() -> str:
     """Muestra la lista de niveles del panel de administración."""
     niveles: List[Dict[str, Any]] = Level.get_all()
     return render_template('admin_panel.html', niveles=niveles)
 
 @admin_bp.route('/agregar_nivel', methods=['GET', 'POST'])
+@admin_required
 def agregar_nivel() -> str:
     """Procesa el formulario para agregar un nuevo nivel."""
     if request.method == 'POST':
@@ -46,6 +50,7 @@ def agregar_nivel() -> str:
 game_bp = Blueprint('game_bp', __name__, url_prefix='/juego')
 
 @game_bp.route('/iniciar', methods=['GET'])
+@login_required
 def iniciar_juego() -> str:
     """Inicializa la partida del jugador desde el nivel 1 y con 3 vidas."""
     session['nivel_actual'] = 1
@@ -53,6 +58,7 @@ def iniciar_juego() -> str:
     return redirect(url_for('game_bp.mostrar_juego'))
 
 @game_bp.route('/', methods=['GET'])
+@login_required
 def mostrar_juego() -> str:
     """Renderiza el nivel actual del jugador o la pantalla de victoria."""
     nivel_actual: int = session.get('nivel_actual', 1)
@@ -74,6 +80,7 @@ def mostrar_juego() -> str:
     )
 
 @game_bp.route('/procesar', methods=['POST'])
+@login_required
 def procesar_juego() -> str:
     """Valida la palabra ingresada por el jugador y gestiona el progreso o pérdida de vidas."""
     palabra_usuario: str = request.form.get('palabra_usuario', '').strip().lower()
