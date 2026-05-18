@@ -3,9 +3,23 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from entidades.user import User
 from enums.role import Role
 from functools import wraps
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno desde el archivo .env
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "super_secret_key"
+
+# 1. SEGURIDAD: Usar variable de entorno para la clave secreta
+# Si no existe en el .env, usa una por defecto solo para desarrollo
+app.secret_key = os.getenv("SECRET_KEY", "super_secret_key_desarrollo")
+
+# 2. SEGURIDAD: Configuración de cookies de sesión seguras
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Evita que JavaScript (XSS) lea la cookie
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax' # Mitiga ataques CSRF
+app.config['SESSION_COOKIE_SECURE'] = False   # Cambiar a True cuando uses HTTPS en producción
+
 
 # Inicializar Flask-Login
 login_manager = LoginManager()
@@ -16,7 +30,7 @@ login_manager.login_view = "login_Gamer"
 def load_user(user_id):
     return User.get_by_id(user_id)
 
-# Decorador de control de accesos (RBAC) para Valeria
+# Decorador de control de accesos
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -37,7 +51,7 @@ def index():
 @app.route('/loginJugador', methods=['GET', 'POST'])
 def login_Gamer():
     if request.method == 'POST':
-        email = request.form.get('alias', '').strip()  # En el HTML se llama 'alias' pero se usa el correo para check_login
+        email = request.form.get('alias', '').strip()  #se llama 'alias' pero se usa el correo para check_login
         password = request.form.get('password', '').strip()
         
         user = User.check_login(email, password)
@@ -80,7 +94,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-# --- INTEGRACIÓN DE BLUEPRINTS DEL JUEGO (Izumy) ---
+# --- INTEGRACIÓN DE BLUEPRINTS DEL JUEGO ---
 from game import game_bp, admin_bp
 app.register_blueprint(game_bp)
 app.register_blueprint(admin_bp)
