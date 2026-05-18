@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Special Elite', monospace;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b0f14;
+  overflow: hidden;
+}
+
+/* Fondo tipo oficina sheriff (oscuro, institucional western) */
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("../img/TheSheriff_admin.jpg") no-repeat center center/cover;
+  filter: grayscale(50%) contrast(90%) brightness(35%);
+  z-index: -1;
+}
+
+/* Contenedor */
+.login-container {
+  width: 380px;
+}
+
+/* Cartel institucional */
+.card {
+  background: rgba(10, 14, 18, 0.88);
+  border: 2px solid #6f7b86;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 50px rgba(0,0,0,0.9);
+  position: relative;
+}
+
+/* Badge sheriff */
+.badge {
+  font-size: 12px;
+  color: #b8c7d6;
+  margin-bottom: 15px;
+  letter-spacing: 4px;
+  border-bottom: 1px solid #6f7b86;
+  padding-bottom: 9px;
+}
+
+/* Título */
+.title {
+  font-size: 62px;
+  color: #d6e2ee;
+  letter-spacing: 5px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+/* Subtítulo */
+.subtitle {
+  margin-bottom: 20px;
+  color: #9fb2c2;
+  font-size: 20px;
+}
+
+/* Labels */
+label {
+  display: block;
+  text-align: left;
+  margin-top: 25px;
+  margin-bottom: 6px;
+  color: #c9d6e2;
+  font-size: 20px;
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 15px;
+  background: #121a22;
+  border: 1px solid #3b4a58;
+  color: #e6eef5;
+  outline: none;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+input:focus {
+  border-color: #8aa6bf;
+  box-shadow: 0 0 10px rgba(148, 166, 191, 0.4);
+}
+
+/* Botón */
+button {
+  margin-top: 30px;
+  width: 100%;
+  padding: 22px;
+  background: #2a3a49;
+  border: 1px solid #8aa6bf;
+  color: #e6eef5;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 2px;
+}
+
+button:hover {
+  background: #8aa6bf;
+  color: #0b0f14;
+}
+
+/* Footer */
+.footer {
+  margin-top: 15px;
+  font-size: 10px;
+  color: #7f93a6;
+}

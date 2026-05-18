@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Outlaw's Word</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+</head>
+<body>
+
+    <!-- VIDEO DE FONDO -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source 
+            src="{{ url_for('static', filename='video/outlaw_index.mp4') }}"
+            type="video/mp4">
+    </video>
+
+    <!-- MÚSICA -->
+    <audio id="bg-music" loop>
+        <source 
+            src="{{ url_for('static', filename='audio/OutlawCowboymusic.mp3') }}"
+            type="audio/mpeg">
+    </audio>
+
+   <div class="menu-ui">
+
+    <h1 class="game-title">
+        OUTLAW
+    </h1>
+
+    <p class="game-subtitle">
+        the frontier remembers
+    </p>
+
+    <div class="menu-options">
+
+        <a href="/loginJugador" class="menu-option active">
+            iniciar sesión
+        </a>
+
+        <a href="/signup" class="menu-option">
+            create account
+        </a>
+
+        <a href="/loginAdmin" class="menu-option">
+            sheriff access
+        </a>
+
+    </div>
+
+    <p class="bottom-text">
+        Begin your journey through the west.
+    </p>
+
+</div>>
+    <script>
+
+        const music = document.getElementById("bg-music");
+
+        music.volume = 0.25;
+
+        document.addEventListener("click", () => {
+
+            music.play();
+
+        }, { once:true });
+
+    </script>
+
+</body>
+</html>

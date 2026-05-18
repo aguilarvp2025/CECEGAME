@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Nivel - Outlaw's Word</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_outlaw.css') }}">
+    <style>
+        .form input, .form textarea { background: transparent; border: none; border-bottom: 2px solid rgba(255,255,255,0.4); padding: 12px; color: white; font-size: 16px; outline: none; text-align: center; width: 100%; margin-bottom: 5px; }
+        .form textarea { resize: vertical; min-height: 80px; font-family: 'Rye', cursive; }
+        .back { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 14px; letter-spacing: 2px; display: block; margin-top: 20px; }
+        .back:hover { color: white; }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="login-ui">
+        <div class="title" style="font-size: 50px;">NEW LEVEL</div>
+        <div class="subtitle">★★★ ADD CHALLENGE ★★★</div>
+
+        <form class="form" action="{{ url_for('admin_bp.agregar_nivel') }}" method="post">
+
+            <input type="number" name="level_number" placeholder="NUMERO DE NIVEL" min="1" required>
+
+            <input type="text" name="image" placeholder="NOMBRE DE IMAGEN (ej: nivel4.jpg)" required>
+
+            <textarea name="hint" placeholder="PISTA PARA EL JUGADOR" required></textarea>
+
+            <input type="text" name="secret_word" placeholder="PALABRA SECRETA (en minusculas)" required>
+
+            <button type="submit">GUARDAR NIVEL</button>
+
+        </form>
+
+        <a href="{{ url_for('admin_bp.panel_admin') }}" class="back">← VOLVER AL PANEL</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Forajido</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="card">
+            <h2>Sign Up</h2>
+            <p class="subtitle">Join the underworld of the Wild West</p>
+
+            <form action="/signup" method="post">
+
+                <div class="input-group">
+                    <label>Alias</label>
+                    <input type="text" name="alias" placeholder="Ej: El Fantasma" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Nombre real</label>
+                    <input type="text" name="nombre_real" placeholder="Tu nombre">
+                </div>
+
+                <div class="input-group">
+                    <label>Correo</label>
+                    <input type="email" name="correo" placeholder="correo@ejemplo.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Contraseña</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit">CREAR CUENTA</button>
+
+            </form>
+
+            <p class="footer">“En este mundo solo sobreviven los que se atreven.”</p>
+        </div>
+
+    </div>
+
+</body>
+</html>

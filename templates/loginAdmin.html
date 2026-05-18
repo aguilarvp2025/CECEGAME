@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sheriff Access </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login_sheriff.css') }}">
+</head>
+<body>
+
+  <div class="background"></div>
+
+  <div class="login-container">
+    <div class="card">
+
+      <div class="badge">★ SHERIFF OFFICE ★</div>
+      <h1 class="title">ACCESS</h1>
+      <p class="subtitle">Sistema de administración autorizado</p>
+
+      <form>
+        <label>Identificación del Sheriff</label>
+        <input type="text" placeholder="ID oficial">
+
+        <label>Código de acceso</label>
+        <input type="password" placeholder="••••••••">
+
+        <button type="submit">Ingresar al despacho</button>
+      </form>
+
+      <p class="footer">Solo personal autorizado del condado</p>
+    </div>
+  </div>
+
+</body>
+</html>

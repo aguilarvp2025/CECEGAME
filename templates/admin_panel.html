@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin - Outlaw's Word</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_outlaw.css') }}">
+    <style>
+        .panel { max-width: 800px; margin: auto; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; color: #d0c4b4; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.2); text-align: left; font-size: 14px; }
+        th { color: #b8860b; font-size: 16px; letter-spacing: 2px; }
+        .btn { display: inline-block; margin-top: 20px; padding: 12px 30px; border: 2px solid rgba(255,255,255,0.6); color: white; text-decoration: none; font-family: 'Rye', cursive; transition: 0.3s; }
+        .btn:hover { background: rgba(255,255,255,0.1); }
+        .flash { color: #ffeb3b; list-style: none; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="login-ui">
+        <div class="title" style="font-size: 50px;">SHERIFF PANEL</div>
+        <div class="subtitle">★★★ ADMIN CONTROL ★★★</div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flash">
+            {% for category, message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <div class="panel">
+            <a href="{{ url_for('admin_bp.agregar_nivel') }}" class="btn">+ AGREGAR NIVEL</a>
+            <a href="{{ url_for('auth_bp.logout') }}" class="btn" style="margin-left: 10px;">SALIR</a>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>NIVEL</th>
+                        <th>IMAGEN</th>
+                        <th>PISTA</th>
+                        <th>PALABRA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for nivel in niveles %}
+                    <tr>
+                        <td>{{ nivel.id }}</td>
+                        <td>{{ nivel.level_number }}</td>
+                        <td>{{ nivel.image }}</td>
+                        <td>{{ nivel.hint }}</td>
+                        <td>{{ nivel.secret_word }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5">No hay niveles registrados aun.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

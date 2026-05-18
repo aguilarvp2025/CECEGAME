@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:'Rye', cursive;
+
+    overflow:hidden;
+}
+
+/* FONDO */
+
+.bg{
+
+    position:fixed;
+    inset:0;
+
+    background:
+        url("../img/pepelviejo.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    filter:
+        brightness(0.25)
+        contrast(1.2)
+        saturate(0.6);
+
+    z-index:-2;
+}
+
+/* CAPA OSCURA */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+    inset:0;
+
+    background:rgba(0,0,0,0.55);
+
+    z-index:-1;
+}
+
+/* CONTENIDO */
+
+.login-ui{
+
+    text-align:center;
+
+    z-index:2;
+}
+
+/* TITULO */
+
+.title{
+
+    font-size:110px;
+
+    letter-spacing:10px;
+
+    color:#6e0000;
+
+    text-shadow:
+        0 0 20px rgba(0,0,0,0.9);
+}
+
+/* SUBTITULO */
+
+.subtitle{
+
+    font-size:18px;
+
+    letter-spacing:6px;
+
+    color:#3b2d0e;
+
+    margin-bottom:60px;
+}
+
+/* FORM */
+
+.form{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:20px;
+
+    width:300px;
+
+    margin:auto;
+}
+
+/* INPUTS */
+
+.form input{
+
+    background:transparent;
+
+    border:none;
+
+    border-bottom:2px solid rgba(255,255,255,0.4);
+
+    padding:12px;
+
+    color:white;
+
+    font-size:18px;
+
+    outline:none;
+
+    text-align:center;
+}
+
+/* BOTON */
+
+.form button{
+
+    margin-top:20px;
+
+    padding:14px;
+
+    background:transparent;
+
+    border:2px solid rgba(255,255,255,0.6);
+
+    color:white;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.form button:hover{
+
+    background:rgba(255,255,255,0.1);
+
+    transform:scale(1.05);
+}
