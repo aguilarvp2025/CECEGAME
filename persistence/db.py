@@ -1,5 +1,9 @@
 import pymysql
 import os
+from dotenv import load_dotenv
+
+# Cargar variables del archivo .env local
+load_dotenv()
 
 def get_connection():
     return pymysql.connect(
